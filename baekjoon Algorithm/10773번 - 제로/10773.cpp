@@ -39,7 +39,8 @@ bool stack::push(int item)
 		std::cout << "stack overflow" << "\n";
 		return false;
 	}
-	stack_[++top] = item; size_++;
+	stack_[++top] = item; 
+	size_++;
 	return true;
 }
 
@@ -49,9 +50,8 @@ int stack::pop()
 	{
 		return -1;
 	}
-	int value = stack_[top--];
 	size_--;
-	return value;
+	return stack_[top--];
 }
 
 int stack::size()
@@ -71,6 +71,7 @@ int main()
 	std::ios::sync_with_stdio(false);
 	std::cin.tie(nullptr);
 	int N, M;
+	int sum = 0;
 	stack st(1000000);
 	std::cin >> N;
 
@@ -78,32 +79,28 @@ int main()
 	{
 		std::cin >> M;
 
-		if (M == 1)
+		if (M != 0)
 		{
-			int value = 0;
-			std::cin >> value;
-			st.push(value);
+			st.push(M);
 		}
-
-		if (M == 2)
-		{
-			std::cout << st.pop() << "\n";
-		}
-
-		if (M == 3)
-		{
-			std::cout << st.size() << "\n";
-		}
-
-		if (M == 4)
-		{
-			std::cout << st.isEmpty() << "\n";
-		}
-
-		if (M == 5)
-		{
-			std::cout << st.peek() << "\n";
-		}
-
+		else st.pop();
 	}
+
+	while(!st.isEmpty())
+	{
+		sum += st.pop();
+	}
+	std::cout << sum << "\n";
 }
+
+
+/* 
+for (int i = 0; i < st.size(); i++)
+{
+	sum += st.pop();
+}
+
+st.size() 함수를 통해서 스택의 크기만큼 반복하겠다는 의도이지만,
+st.pop()을 할 때마다 스택의 크기가 줄어들어 의도한대로 작동하지 않는다.
+
+*/
